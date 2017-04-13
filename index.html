@@ -8,37 +8,51 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-	<div class="row" >
-		<div class="col-md-6" style="max-height: 100vh;overflow: scroll">
-			<div id="app1">
+	<div class="row" id="app1">
+		<div class="col-md-7" style="max-height: 98vh;overflow: scroll">
+			<div >
 				<h1>{{Herder}}</h1>
 				<ul>
 					<li v-for="(value, key) in title" style="list-style-type:none">
 						<h3>{{ key }}</h3>
 						<ul>
-							<li v-for="(item, key) in value" style="list-style-type:none"> 
-								<h4>{{ key }}. {{ item }}</h4> 
+							<li   v-for="(item, key2) in value" v-bind:class="Herder" style="list-style-type:none"> 
+								<h4 style="display: inline-block" ><label v-bind:for="key + key2" >{{ key2 }}. {{ item }}</label></h4> <input v-bind:id="key + key2 "  v-bind:value="item"  type="checkbox"  v-model="all" v-on:click="updateChart(percen)"  />
 							</li>
 						</ul>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-6">
-				ice
+		<div class="col-md-5" align="center" style="padding-top: 10%">
+			
+			<div id="example1"></div>
+			<h1> {{all.length}} / {{ max_percen }}</h1>
+
+			<h1 v-if="status">Successful</h1>
 		</div>
 
 	</div>
 
 </body>
 <script type="text/javascript" src="lib/js/vue.js"></script>
+<script type="text/javascript" src="lib/js/circleDonutChart.js"></script>
+
 <script type="text/javascript">
 	var vue_var = new Vue({
 		el : '#app1',
 		data:{
+			all:[],
 			Herder:"Project scope",
+			max:100,
+			max_percen :0,
+			unit_percen :0,
+			status:false,
+			end:0,
+			start:0,
+			percen:0,
 			title :{
-				"markdown_complier":{
+				"1) markdown_complier":{
 					'1':"สามารถใช้ภาษา mark down ในการแปลงตัวอักษรให้เป็นตัวหนาได้",
 					'2':"สามารถใช้ภาษา mark down ในการแปลงตัวอักษรให้เป็นตัวเอียงได้",
 					'3':"สามารถใช้ภาษา mark down ในการทำ header 1-6 ได้",
@@ -47,41 +61,78 @@
 					'6':"สามารถใช้ภาษา mark down ในการทำลิงค์รูปภาพได้",
 					'7':"สามารถใช้ภาษา mark down ในการทำลิสต์รายการได้",
 					'8':"สามารถใช้ภาษา mark down ในการแสดงแท็ก html ออกทางเว็บเพจได้"
+					
 				},
-				"markdown_tutorial":{
+				"2) markdown_tutorial":{
 					'1':"สามารถแสดงคำสั่งการใช้งานต่างๆของภาษา markdown ที่มีได้",
 					'2':"สามารถแสดงตัวอย่างการใช้งานของภาษา markdown ได้",
 					'3':"สามารถแสดงคำสั่ง option เสริม ของภาษา markdown ที่ผู้วิจัยได้พัฒนาเพิ่มได้"
 				},
-				"export_file_system":{
+				"3) export_file_system":{
 					'1':"สามารถ Export เป็นไฟล์ นามสกุล .md ได้ (ไฟล์ markdown)",
 					'2':"สามารถ Export เป็นไฟล์ นามสกุล .html ได้",
 					'3':"สามารถ Export เป็นไฟล์ นามสกุล .pdf ได้ "
 				},
-				"import_file_system":{
+				"4) import_file_system":{
 					'1':"สามารถ Import ไฟล์ นามสกุล .md",
 					'2':"สามารถ Import ไฟล์ นามสกุล .txt"
 				},
-				"Optional":{
+				"5) Optional":{
 					'1':"สามารถกำหนดขนาดรูป จากคำสั่ง ลิงค์รูปของภาษา markdown ได้",
 					'2':"สามารถกำหนดสีของตัวอักษรได้"
 				},
-				"Authentication":{
+				"6) Authentication":{
 					'1':"สามารภทำการ Sing in ได้",
 					"2":"สามารภทำการ Sing out ได้"
 				},
-				"Register":{
+				"7) Register":{
 					'1':"สามารถ สมัครสมาชิกได้"
 				},
-				"Document_management_system":{
+				"8) Document_management_system":{
 					'1':"สามารถ สร้าง Document ได้",
 					'2':"สามารถ เปลิ่ยนชื่อ Document ได้",
 					'3':"สามารถ save Document เพื่อเก็บไปที่ server ได้",
 					'4':"สามารถ ลบ Document ได้"					
 				}
 			}
+		},
+		created: function () {
+			let obj = this.title;
+			let count =0 ;
+        	Object.keys(obj).forEach(function(key) {
+				Object.keys(obj[key]).forEach(function(key) {
+					count++;
+				});
+			});
+			this.max_percen = count;
+			this.unit_percen = (this.max/this.max_percen);
+			var circle1 = new circleDonutChart('example1');
+      		circle1.draw({end:this.end,start:this.start, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:'#909081'});
+			
+   		},
+		methods:{
+			updateChart:function(){
+			this.end = this.all.length*this.unit_percen;
+
+			document.getElementById("example1").innerHTML = "";
+			var circle1 = new circleDonutChart('example1');
+      		circle1.draw({end:this.end,start:this.start/2, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:'#909081'});
+			this.start = this.end;
+				if(this.end == 100){
+					this.status = true;
+				}else{
+					this.status = false;
+				}
+			}
 		}
+		 
 	})
 
+	//alert(vue_var.max);
+
 </script>
+<script>
+  
+</script>
+
 </html>
