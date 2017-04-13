@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>vue framwork</title>
+	<link rel="icon" href="https://vuejs.org/images/logo.png" type="image/x-icon">
+</head>
+<body>
+<div id="app1">
+	
+	<ul>
+		<li v-for="(value, key) in title">
+			{{ key }}
+			<ul>
+				<li v-for="item in value"> {{ item }}</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+</body>
+<script type="text/javascript" src="lib/vue.js"></script>
+<script type="text/javascript">
+	var vue_var = new Vue({
+		el : '#app1',
+		data:{
+			title :{
+				"markdown_complier":{
+					'1':"สามารถใช้ภาษา mark down ในการแปลงตัวอักษรให้เป็นตัวหนาได้",
+					'2':"สามารถใช้ภาษา mark down ในการแปลงตัวอักษรให้เป็นตัวเอียงได้",
+					'3':"สามารถใช้ภาษา mark down ในการทำ header 1-6 ได้",
+					'4':"สามารถใช้ภาษา mark down ในการขีดเส้นใต้ได้",
+					'5':"สามารถใช้ภาษา mark down ในการทำลิงค์เชื่อมโยงได้",
+					'6':"สามารถใช้ภาษา mark down ในการทำลิงค์รูปภาพได้",
+					'7':"สามารถใช้ภาษา mark down ในการทำลิสต์รายการได้",
+					'8':"สามารถใช้ภาษา mark down ในการแสดงแท็ก html ออกทางเว็บเพจได้"
+				},
+				"markdown_tutorial":{
+					'1':"สามารถแสดงคำสั่งการใช้งานต่างๆของภาษา markdown ที่มีได้",
+					'2':"สามารถแสดงตัวอย่างการใช้งานของภาษา markdown ได้",
+					'3':"สามารถแสดงคำสั่ง option เสริม ของภาษา markdown ที่ผู้วิจัยได้พัฒนาเพิ่มได้"
+				},
+				"export_file_system":{
+					'1':"สามารถ Export เป็นไฟล์ นามสกุล .md ได้ (ไฟล์ markdown)",
+					'2':"สามารถ Export เป็นไฟล์ นามสกุล .html ได้",
+					'3':"สามารถ Export เป็นไฟล์ นามสกุล .pdf ได้ "
+				},
+				"import_file_system":{
+					'1':"สามารถ Import ไฟล์ นามสกุล .md",
+					'2':"สามารถ Import ไฟล์ นามสกุล .txt"
+				}
+			}
+		}
+	})
+
+</script>
+</html>
