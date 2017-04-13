@@ -5,25 +5,29 @@
 	<meta charset="UTF-8">
 	<title>vue framwork</title>
 	<link rel="icon" href="https://vuejs.org/images/logo.png" type="image/x-icon">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
 <div id="app1">
-	
+	<h1>{{Herder}}</h1>
 	<ul>
-		<li v-for="(value, key) in title">
-			{{ key }}
+		<li v-for="(value, key) in title" style="list-style-type:none">
+			<h3>{{ key }}</h3>
 			<ul>
-				<li v-for="item in value"> {{ item }}</li>
+				<li v-for="(item, key) in value" style="list-style-type:none"> 
+					<h4>{{ key }}. {{ item }}</h4> 
+				</li>
 			</ul>
 		</li>
 	</ul>
 </div>
 </body>
-<script type="text/javascript" src="lib/vue.js"></script>
+<script type="text/javascript" src="lib/js/vue.js"></script>
 <script type="text/javascript">
 	var vue_var = new Vue({
 		el : '#app1',
 		data:{
+			Herder:"Project scope",
 			title :{
 				"markdown_complier":{
 					'1':"สามารถใช้ภาษา mark down ในการแปลงตัวอักษรให้เป็นตัวหนาได้",
@@ -48,6 +52,23 @@
 				"import_file_system":{
 					'1':"สามารถ Import ไฟล์ นามสกุล .md",
 					'2':"สามารถ Import ไฟล์ นามสกุล .txt"
+				},
+				"Optional":{
+					'1':"สามารถกำหนดขนาดรูป จากคำสั่ง ลิงค์รูปของภาษา markdown ได้",
+					'2':"สามารถกำหนดสีของตัวอักษรได้"
+				},
+				"Authentication":{
+					'1':"สามารภทำการ Sing in ได้",
+					"2":"สามารภทำการ Sing out ได้"
+				},
+				"Register":{
+					'1':"สามารถ สมัครสมาชิกได้"
+				},
+				"Document_management_system":{
+					'1':"สามารถ สร้าง Document ได้",
+					'2':"สามารถ เปลิ่ยนชื่อ Document ได้",
+					'3':"สามารถ save Document เพื่อเก็บไปที่ server ได้",
+					'4':"สามารถ ลบ Document ได้"					
 				}
 			}
 		}
