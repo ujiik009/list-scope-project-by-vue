@@ -8,28 +8,40 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+			<a class="navbar-brand" href="#"><img src="img/logo.png" style="width: 30px;height: 30px"/></a>
+			</div>
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">Vue.js </a></li>
+
+			</ul>
+		</div>
+	</nav>
 	<div class="row" id="app1">
-		<div class="col-md-7" style="max-height: 98vh;overflow: scroll">
+		<div class="col-md-7" style="max-height: 98vh;overflow: scroll;padding-top: 5%" >
 			<div >
-				<h1>{{Herder}}</h1>
+				<h1 style="color: #41b883">{{Herder}}</h1>
 				<ul>
 					<li v-for="(value, key) in title" style="list-style-type:none">
 						<h3>{{ key }}</h3>
 						<ul>
 							<li   v-for="(item, key2) in value" v-bind:class="Herder" style="list-style-type:none"> 
-								<h4 style="display: inline-block" ><label v-bind:for="key + key2" >{{ key2 }}. {{ item }}</label></h4> <input v-bind:id="key + key2 "  v-bind:value="item"  type="checkbox"  v-model="all" v-on:click="updateChart(percen)"  />
+								<h4 style="display: inline-block" ><label v-bind:for="key + key2" style="cursor: pointer" >{{ key2 }}. {{ item }}</label></h4> <input v-bind:id="key + key2 "  v-bind:value="item"  type="checkbox"  v-model="all" v-on:click="updateChart(percen)"  />
 							</li>
 						</ul>
 					</li>
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-5" align="center" style="padding-top: 10%">
-			
+		<div class="col-md-5" align="center" style="padding-top: 7%">
+			<img src="img/logo.png" style="width: 100px;height: 100px"/> <h3 style="display: inline;color: #41b883">power by vue.js</h3>
 			<div id="example1"></div>
 			<h1> {{all.length}} / {{ max_percen }}</h1>
 
-			<h1 v-if="status">Successful</h1>
+			<h1 v-if="status" style="color: #41b883">Successful</h1>
+			<h1 v-else style="color: #e2442f">Unsuccessful</h1>
 		</div>
 
 	</div>
@@ -39,11 +51,12 @@
 <script type="text/javascript" src="lib/js/circleDonutChart.js"></script>
 
 <script type="text/javascript">
+	var circle1 = new circleDonutChart('example1');
 	var vue_var = new Vue({
 		el : '#app1',
 		data:{
 			all:[],
-			Herder:"Project scope",
+			Herder:" Project Markdown Editor",
 			max:100,
 			max_percen :0,
 			unit_percen :0,
@@ -51,6 +64,7 @@
 			end:0,
 			start:0,
 			percen:0,
+			color:'#a5a1a0',
 			title :{
 				"1) markdown_complier":{
 					'1':"สามารถใช้ภาษา mark down ในการแปลงตัวอักษรให้เป็นตัวหนาได้",
@@ -106,8 +120,8 @@
 			});
 			this.max_percen = count;
 			this.unit_percen = (this.max/this.max_percen);
-			var circle1 = new circleDonutChart('example1');
-      		circle1.draw({end:this.end,start:this.start, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:'#909081'});
+			
+      		circle1.draw({end:this.end,start:this.start, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:this.color});
 			
    		},
 		methods:{
@@ -115,14 +129,16 @@
 			this.end = this.all.length*this.unit_percen;
 
 			document.getElementById("example1").innerHTML = "";
-			var circle1 = new circleDonutChart('example1');
-      		circle1.draw({end:this.end,start:this.start/2, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:'#909081'});
-			this.start = this.end;
 				if(this.end == 100){
 					this.status = true;
+					this.color= '#41b883'; 
 				}else{
 					this.status = false;
+					this.color= '#a5a1a0';
 				}
+      		new circleDonutChart('example1').draw({end:this.end,start:this.start/2, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:this.color});
+			this.start = this.end;
+			
 			}
 		}
 		 
