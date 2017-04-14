@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>vue framwork</title>
+	<title>vue.js</title>
 	<link rel="icon" href="https://vuejs.org/images/logo.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
@@ -41,17 +41,13 @@
 			<h1> {{all.length}} / {{ max_percen }}</h1>
 
 			<h1 v-if="status" style="color: #41b883">Successful</h1>
-			<h1 v-else style="color: #e2442f">Unsuccessful</h1>
+			<h1 v-else style="color: #e2442f">Unsuccessful</h1>	
 		</div>
-
 	</div>
-
 </body>
 <script type="text/javascript" src="lib/js/vue.js"></script>
 <script type="text/javascript" src="lib/js/circleDonutChart.js"></script>
-
 <script type="text/javascript">
-	var circle1 = new circleDonutChart('example1');
 	var vue_var = new Vue({
 		el : '#app1',
 		data:{
@@ -75,7 +71,6 @@
 					'6':"สามารถใช้ภาษา mark down ในการทำลิงค์รูปภาพได้",
 					'7':"สามารถใช้ภาษา mark down ในการทำลิสต์รายการได้",
 					'8':"สามารถใช้ภาษา mark down ในการแสดงแท็ก html ออกทางเว็บเพจได้"
-					
 				},
 				"2) markdown_tutorial":{
 					'1':"สามารถแสดงคำสั่งการใช้งานต่างๆของภาษา markdown ที่มีได้",
@@ -120,14 +115,11 @@
 			});
 			this.max_percen = count;
 			this.unit_percen = (this.max/this.max_percen);
-			
-      		circle1.draw({end:this.end,start:this.start, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:this.color});
-			
+			this.updateChart();
    		},
 		methods:{
 			updateChart:function(){
 			this.end = this.all.length*this.unit_percen;
-
 			document.getElementById("example1").innerHTML = "";
 				if(this.end == 100){
 					this.status = true;
@@ -136,16 +128,11 @@
 					this.status = false;
 					this.color= '#a5a1a0';
 				}
-      		new circleDonutChart('example1').draw({end:this.end,start:this.start/2, maxValue:100, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:this.color});
+      		new circleDonutChart('example1').draw({end:this.end,start:this.start/2, maxValue:this.max, titlePosition:"outer-top", titleText:"", outerCircleColor:'#9fe878', innerCircleColor:this.color});
 			this.start = this.end;
-			
 			}
-		}
-		 
+		} 
 	})
-
-	//alert(vue_var.max);
-
 </script>
 <script>
   
